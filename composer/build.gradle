@@ -12,7 +12,8 @@ dependencies {
     compile libraries.rxJava
     compile libraries.jCommander
     compile libraries.commanderOs
-    compile libraries.commanderAndroid
+    compile files ("commander.jar")
+//    compile libraries.commanderAndroid
     compile libraries.apacheCommonsIo
     compile libraries.apacheCommonsLang
     compile libraries.gson
