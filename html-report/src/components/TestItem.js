@@ -58,15 +58,26 @@ export default class TestItem extends Component {
             <div className="title-common">Screenshots</div>
             <ul className="images row">
               { data.screenshots.map((image) => {
-                return ( <li key={ image.path } className="images__item col-20">
-                  <img src={ image.path } />
-                  <div className="images__item__title margin-top-20">{ image.title }</div>
-                </li> )
+                if(image.path.includes('.mp4')){
+                  return (
+                    <li key={ image.path } className="images__item col-20">
+                    <video width="480" height="360" controls>
+                      <source src={ image.path } />
+                    </video>
+                    <div className="images__item__title margin-top-20">{ image.title }</div>
+                    </li>
+                  )
+                }else if(image.path.includes('.png')){
+                  return ( <li key={ image.path } className="images__item col-20">           
+                <img src={ image.path } /> 
+                <div className="images__item__title margin-top-20">{ image.title }</div>
+              </li> )
+                }
               }) }
             </ul>
           </div>}
 
-          { !!data.stacktrace.length && <div className="card">
+          { !!data.stacktrace && <div className="card">
             <div className="title-common">Stacktrace</div>
             <pre className="row" style={ { overflow: 'auto' } }>{ data.stacktrace }</pre>
           </div>}
