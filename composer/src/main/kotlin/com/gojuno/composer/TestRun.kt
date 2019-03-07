@@ -52,7 +52,7 @@ fun AdbDevice.runTests(
     val logsDir = File(File(outputDir, "logs"), adbDevice.id)
     val instrumentationOutputFile = File(logsDir, "instrumentation.output")
     val commandPrefix = if (useTestServices) {
-        "CLASSPATH=$(pm path android.support.test.services) app_process / android.support.test.services.shellexecutor.ShellMain "
+        "CLASSPATH=$(pm path androidx.test.services) app_process / androidx.test.services.shellexecutor.ShellMain "
     } else ""
 
     val runTests = process(
@@ -165,12 +165,15 @@ private fun pullTestFiles(adbDevice: AdbDevice, test: InstrumentationTest, outpu
         }
         .flatMap { screenshotsFolderOnHostMachine ->
             adbDevice
-                    .pullFolder(
-                            // TODO: Add support for internal storage and external storage strategies.
-                            folderOnDevice = "/storage/emulated/0/app_spoon-screenshots/${test.className}/${test.testName}",
-                            folderOnHostMachine = screenshotsFolderOnHostMachine,
-                            logErrors = verboseOutput
-                    )
+                    .externalStorage()
+                    .flatMap { externalStorageFolder ->
+                        adbDevice.pullFolder(
+                                // TODO: Add support for internal storage and external storage strategies.
+                                folderOnDevice = "$externalStorageFolder/app_spoon-screenshots/${test.className}/${test.testName}",
+                                folderOnHostMachine = screenshotsFolderOnHostMachine,
+                                logErrors = verboseOutput
+                        )
+                    }
                     .map { File(screenshotsFolderOnHostMachine, test.testName) }
         }
         .map { screenshotsFolderOnHostMachine ->
