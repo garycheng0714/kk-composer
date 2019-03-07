@@ -14,6 +14,7 @@ export default class SuitesList extends Component {
                 <a href={ paths.fromIndexToSuite(suite.id) } className="title-common with-arrow">
                   Suite { suite.id  }
                 </a>
+                <a href={ paths.fromIndexToSuite(suite.id) }>
                 <div className="row full margin-bottom-20 bounded">
                   <div className="card-info">
                     <div className="text-sub-title-light">Passed</div>
@@ -36,6 +37,7 @@ export default class SuitesList extends Component {
                     <div className="card-info__content">{ suite.devices.length }</div>
                   </div>
                 </div>
+                </a>
                 <ul className="container-expanded list">
                   { suite.devices.map((device, i) => {
                     return (<li key={ i } className="list__item no-hover">
