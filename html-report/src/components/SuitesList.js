@@ -44,7 +44,7 @@ export default class SuitesList extends Component {
                         <div className="text-title margin-bottom-10 label">{ device.id }</div>
                         <div className="text-title margin-bottom-10 label">{ device.model }</div>
                         <div className="margin-bottom-10">
-                          <a href={ device.logcat_path }>{ device.logcat_path }</a>
+                          <a href={ device.logcat_path } target="_blank">{ device.logcat_path }</a>
                         </div>
                         <div className="margin-bottom-10">
                           <a href={ device.instrumentation_output_path }>{ device.instrumentation_output_path }</a>
