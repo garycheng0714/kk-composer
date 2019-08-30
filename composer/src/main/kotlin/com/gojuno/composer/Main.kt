@@ -145,6 +145,7 @@ private fun runAllTests(args: Args, testPackage: TestPackage.Valid, testRunner: 
 
                                 device
                                         .runTests(
+                                                args = args,
                                                 testPackageName = testPackageName,
                                                 testRunnerClass = testRunnerClass,
                                                 instrumentationArguments = instrumentationArguments.formatInstrumentationArguments(),

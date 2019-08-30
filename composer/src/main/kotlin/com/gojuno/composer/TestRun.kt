@@ -39,6 +39,7 @@ data class AdbDeviceTest(
 }
 
 fun AdbDevice.runTests(
+        args: Args,
         testPackageName: String,
         testRunnerClass: String,
         instrumentationArguments: String,
@@ -47,9 +48,9 @@ fun AdbDevice.runTests(
         keepOutput: Boolean,
         useTestServices: Boolean
 ): Single<AdbDeviceTestRun> {
-
+//File(args.outputDirectory, "html-report")
     val adbDevice = this
-    val logsDir = File(File(outputDir, "logs"), adbDevice.id)
+    val logsDir = File(File(File(args.outputDirectory, "html-report"), "logs"), adbDevice.id)
     val instrumentationOutputFile = File(logsDir, "instrumentation.output")
     val commandPrefix = if (useTestServices) {
         "CLASSPATH=$(pm path androidx.test.services) app_process / androidx.test.services.shellexecutor.ShellMain "
@@ -161,7 +162,7 @@ data class PulledFiles(
 private fun pullTestFiles(adbDevice: AdbDevice, test: InstrumentationTest, outputDir: File, verboseOutput: Boolean): Single<PulledFiles> = Single
         // TODO: Add support for spoon files dir.
         .fromCallable {
-            File(File(File(outputDir, "screenshots"), adbDevice.id), test.className).apply { mkdirs() }
+            File(File(File(File(outputDir, "html-report"), "screenshots"), adbDevice.id), test.className).apply { mkdirs() }
         }
         .flatMap { screenshotsFolderOnHostMachine ->
             adbDevice
